@@ -1,17 +1,18 @@
 package pila
 
 /* Definición del struct pila proporcionado por la cátedra. */
-
 type pilaDinamica[T any] struct {
 	datos    []T
 	cantidad int
 }
 
 /* Constructor del TAD Pila. */
-
 func CrearPilaDinamica[T any]() Pila[T] {
+	const _CAPACIDADINICIAL = 10
     pila := new(pilaDinamica[T]) // se agrega el generic
     // hago lo que deba hacer
+	pila.datos := make([]T, _CAPACIDADINICIAL)
+	pila.cantidad := 0
     return pila
 }
 
