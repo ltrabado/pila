@@ -27,6 +27,23 @@ func TestInvariantePila(t *testing.T) {
 	}
 }
 
+func TestVolumen(t *testing.T) {
+	TAM := 10000
+	pila := TDAPila.CrearPilaDinamica[int]()
+	
+	t.Log("Prueba de redimension creciente")
+	//Apilo
+	for i := 0; i < TAM; i++ {
+		pila.Apilar(i)
+	}
+
+	t.Log("Prueba de redimension decreciente")
+	//Desapilo
+	for i := TAM-1; i >= 0; i-- {
+		require.EqualValues(t, i, pila.Desapilar())
+	}
+}
+
 func TestPilaFloat64Vacia(t *testing.T) {
 	pila := TDAPila.CrearPilaDinamica[float64]()
 	require.True(t, pila.EstaVacia())
