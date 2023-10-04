@@ -44,6 +44,22 @@ func TestVolumen(t *testing.T) {
 	}
 }
 
+func TestDesapiloHastaVaciar(t *testing.T) {
+	TAM := 15
+	pila := TDAPila.CrearPilaDinamica[int]()
+	//Apilo
+	for i := 0; i < TAM; i++ {
+		pila.Apilar(i)
+	}
+	//Desapilo
+	for i := TAM-1; i >= 0; i-- {
+		require.EqualValues(t, i, pila.Desapilar())
+	}
+	require.True(t, pila.EstaVacia())
+	require.PanicsWithValue(t, "La pila esta vacia", func() { pila.VerTope() })
+	require.PanicsWithValue(t, "La pila esta vacia", func() { pila.Desapilar() })
+}
+
 func TestPilaFloat64Vacia(t *testing.T) {
 	pila := TDAPila.CrearPilaDinamica[float64]()
 	require.True(t, pila.EstaVacia())
