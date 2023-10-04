@@ -91,7 +91,7 @@ func TestPilaBooleanaVacia(t *testing.T) {
 func TestInvariantePilaBooleana(t *testing.T) {
 	TAM := 10
 	pila := TDAPila.CrearPilaDinamica[bool]()
-	//Apilo flotantes
+	//Apilo booleanos
 	for i := 0; i < TAM; i++ {
 		if i%2 == 0 {
 			pila.Apilar(true)
@@ -99,7 +99,7 @@ func TestInvariantePilaBooleana(t *testing.T) {
 			pila.Apilar(false)
 		}
 	}
-	//Desapilo flotantes
+	//Desapilo booleanos
 	for i := TAM - 1; i >= 0; i-- {
 		if i%2 == 0 {
 			require.True(t, pila.Desapilar())

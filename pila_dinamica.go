@@ -10,7 +10,6 @@ type pilaDinamica[T any] struct {
 
 /* Constructor del TAD Pila. */
 func CrearPilaDinamica[T any]() Pila[T] {
-	//const _CAPACIDADINICIAL = 10
 	pila := new(pilaDinamica[T]) // se agrega el generic
 	// hago lo que deba hacer
 	pila.datos = make([]T, _CAPACIDADINICIAL)
