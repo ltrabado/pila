@@ -1,5 +1,7 @@
 package pila
 
+const _CAPACIDADINICIAL = 10
+
 /* Definición del struct pila proporcionado por la cátedra. */
 type pilaDinamica[T any] struct {
 	datos    []T
@@ -8,15 +10,13 @@ type pilaDinamica[T any] struct {
 
 /* Constructor del TAD Pila. */
 func CrearPilaDinamica[T any]() Pila[T] {
-	const _CAPACIDADINICIAL = 10
+	//const _CAPACIDADINICIAL = 10
     pila := new(pilaDinamica[T]) // se agrega el generic
     // hago lo que deba hacer
 	pila.datos = make([]T, _CAPACIDADINICIAL)
 	pila.cantidad = 0
     return pila
 }
-
-
 
 // EstaVacia devuelve verdadero si la pila no tiene elementos apilados, false en caso contrario.
 func (pila *pilaDinamica[T]) EstaVacia() bool {
@@ -36,25 +36,31 @@ func (pila *pilaDinamica[T]) VerTope() T {
 }
 
 /* redimensionar ajusta la capacidad de la pila de la siguiente manera:
-	1) Si la pila se encuentra recien creada (pila vacia y capacidad igual a cero), se le asigna una capacidad inicial de 10.
-	2) Si cantidad es igual a la capacidad de la pila, se duplica su capacidad.
-	3) Si cantidad es menor o igual a la cuarta parte de la capacidad de la pila, se reduce su capacidad a la mitad. */
-/*
-func redimensionar() T {
-	if (EstaVacia() == (cap(datos)==0)) {
-		//Asignar capacidad = 10
+	1) Si cantidad es igual a la capacidad de la pila, se duplica su capacidad.
+	2) Si cantidad es menor o igual a la cuarta parte de la capacidad de la pila, se reduce su capacidad a la mitad. */
+
+func (pila *pilaDinamica[T]) redimensionar() {
+	if cap(pila.datos) > _CAPACIDADINICIAL {
+		if pila.cantidad == cap(pila.datos) {
+			//Duplicar capacidad
+			nuevoVector := make([]T, pila.cantidad*2)
+			copy(nuevoVector, pila.datos)
+			pila.datos = nuevoVector
+		}
+		if (pila.cantidad*4) <= cap(pila.datos) {
+			//capacidad=capacidad/2
+			nuevoVector := make([]T, pila.cantidad/2)
+			copy(nuevoVector, pila.datos)
+			pila.datos = nuevoVector
+		}
 	}
-	if cantidad == cap(datos) {
-		//Duplicar capacidad
-	}
-	if (cantidad*4) <= cap(datos) {
-		//capacidad=capacidad/2
-	}
-}*/
+	return
+}
+
 // Apilar agrega un nuevo elemento a la pila.
 func (pila *pilaDinamica[T]) Apilar(elem T) {
 	if pila.cantidad == cap(pila.datos) {
-		//redimensionar
+		pila.redimensionar()
 	}
 	pila.datos[pila.cantidad] = elem
 	pila.cantidad++
@@ -69,6 +75,6 @@ func (pila *pilaDinamica[T]) Desapilar() T {
 	}
 	elementoDesapilado := pila.datos[pila.cantidad-1]
 	pila.cantidad--
-	//redimensionar
+	pila.redimensionar()
 	return elementoDesapilado
 }
