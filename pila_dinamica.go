@@ -11,11 +11,11 @@ type pilaDinamica[T any] struct {
 /* Constructor del TAD Pila. */
 func CrearPilaDinamica[T any]() Pila[T] {
 	//const _CAPACIDADINICIAL = 10
-    pila := new(pilaDinamica[T]) // se agrega el generic
-    // hago lo que deba hacer
+	pila := new(pilaDinamica[T]) // se agrega el generic
+	// hago lo que deba hacer
 	pila.datos = make([]T, _CAPACIDADINICIAL)
 	pila.cantidad = 0
-    return pila
+	return pila
 }
 
 // EstaVacia devuelve verdadero si la pila no tiene elementos apilados, false en caso contrario.
@@ -30,17 +30,16 @@ func (pila *pilaDinamica[T]) EstaVacia() bool {
 // Si está vacía, entra en pánico con un mensaje "La pila esta vacia".
 func (pila *pilaDinamica[T]) VerTope() T {
 	if pila.EstaVacia() == true {
-		panic("La pila esta vacia") 
+		panic("La pila esta vacia")
 	}
 	return pila.datos[pila.cantidad-1]
 }
 
 /* redimensionar ajusta la capacidad de la pila de la siguiente manera:
-	1) Si cantidad es igual a la capacidad de la pila, se duplica su capacidad.
-	2) Si cantidad es menor o igual a la cuarta parte de la capacidad de la pila, se reduce su capacidad a la mitad. */
+1) Si cantidad es igual a la capacidad de la pila, se duplica su capacidad.
+2) Si cantidad es menor o igual a la cuarta parte de la capacidad de la pila, se reduce su capacidad a la mitad. */
 
 func (pila *pilaDinamica[T]) redimensionar() {
-	if cap(pila.datos) >= _CAPACIDADINICIAL {
 		if pila.cantidad == cap(pila.datos) {
 			//Duplicar capacidad
 			nuevaCapacidad := pila.cantidad * 2
@@ -48,14 +47,13 @@ func (pila *pilaDinamica[T]) redimensionar() {
 			copy(nuevoVector, pila.datos)
 			pila.datos = nuevoVector
 		}
-		if (pila.cantidad*4) <= cap(pila.datos) {
+		if (pila.cantidad * 4) <= cap(pila.datos) && cap(pila.datos)/2 >= _CAPACIDADINICIAL {
 			//capacidad=capacidad/2
-			nuevaCapacidad := cap(pila.datos)/2
+			nuevaCapacidad := cap(pila.datos) / 2
 			nuevoVector := make([]T, nuevaCapacidad)
 			copy(nuevoVector, pila.datos)
 			pila.datos = nuevoVector
 		}
-	}
 	return
 }
 
@@ -73,7 +71,7 @@ func (pila *pilaDinamica[T]) Apilar(elem T) {
 // se devuelve ese valor. Si está vacía, entra en pánico con un mensaje "La pila esta vacia".
 func (pila *pilaDinamica[T]) Desapilar() T {
 	if pila.EstaVacia() == true {
-		panic("La pila esta vacia") 
+		panic("La pila esta vacia")
 	}
 	elementoDesapilado := pila.datos[pila.cantidad-1]
 	pila.cantidad--
