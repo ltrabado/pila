@@ -40,16 +40,18 @@ func (pila *pilaDinamica[T]) VerTope() T {
 	2) Si cantidad es menor o igual a la cuarta parte de la capacidad de la pila, se reduce su capacidad a la mitad. */
 
 func (pila *pilaDinamica[T]) redimensionar() {
-	if cap(pila.datos) > _CAPACIDADINICIAL {
+	if cap(pila.datos) >= _CAPACIDADINICIAL {
 		if pila.cantidad == cap(pila.datos) {
 			//Duplicar capacidad
-			nuevoVector := make([]T, pila.cantidad*2)
+			nuevaCapacidad := pila.cantidad * 2
+			nuevoVector := make([]T, nuevaCapacidad)
 			copy(nuevoVector, pila.datos)
 			pila.datos = nuevoVector
 		}
 		if (pila.cantidad*4) <= cap(pila.datos) {
 			//capacidad=capacidad/2
-			nuevoVector := make([]T, pila.cantidad/2)
+			nuevaCapacidad := cap(pila.datos)/2
+			nuevoVector := make([]T, nuevaCapacidad)
 			copy(nuevoVector, pila.datos)
 			pila.datos = nuevoVector
 		}
